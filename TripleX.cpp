@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <ctime>
 
 void PrintIntroduction(int Difficulty)
 {
@@ -10,9 +11,9 @@ void PrintIntroduction(int Difficulty)
 bool PlayGame(int Difficulty)
 {
     PrintIntroduction(Difficulty);
-    const int CodeA = 4;
-    const int CodeB = 3;
-    const int CodeC = 2;
+    const int CodeA = rand() % Difficulty + Difficulty;
+    const int CodeB = rand() % Difficulty + Difficulty;
+    const int CodeC = rand() % Difficulty + Difficulty;
 
     const int CodeSum = CodeA + CodeB + CodeC;
     const int CodeProduct = CodeA * CodeB * CodeC;
@@ -33,20 +34,22 @@ bool PlayGame(int Difficulty)
     // Check if the player guess is correct
     if (GuessSum == CodeSum && GuessProduct == CodeProduct)
     {
-        std::cout << "You Win!" << std::endl;
+        std::cout << "\n*** Well done agent! You have extracted a file! Keep going! ***" << std::endl;
         return true;
     }
     else
     {
-        std::cout << "You Lose!" << std::endl;
+        std::cout << "\n*** You entered the wrong code! Careful agent! Try again! ***" << std::endl;
         return false;
     }
 }
 
 int main()
 {
+    srand(time(NULL));
     int LevelDifficulty = 1;
-    while (true)
+    const int MaxLevel = 5;
+    while (LevelDifficulty <= MaxLevel)
     {
         bool bLevelComplete = PlayGame(LevelDifficulty);
         std::cin.clear();
@@ -54,8 +57,10 @@ int main()
 
         if (bLevelComplete)
         {
-           ++LevelDifficulty;
+            ++LevelDifficulty;
         }
     }
+
+    std::cout << "*** Great work agent! You got all the files! Now get out of there! ***" << std::endl;
     return 0;
 }
